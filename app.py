@@ -25,7 +25,7 @@ def clean_text(text):
     return text
 
 # -- Streamlit UI --
-st.title("Movie Review Sentiment Analysis")
+st.markdown("<h1 style='color:#00b36e;'>Huzaifa Analyzer</h1>", unsafe_allow_html=True)
 st.write("Enter a movie review and the GRU model will predict its sentiment.")
 
 review = st.text_area("Movie Review:", height=150)
@@ -48,8 +48,7 @@ if st.button("Predict Sentiment"):
         pred_label = classes[pred_index]
         
         # Display results
-        st.write(f"**Predicted sentiment:** {pred_label}")
-        st.write("**Confidence Scores:**")
+        st.markdown(f"**<span style='color:#00b36e;'>Predicted sentiment:</span>** {pred_label}", unsafe_allow_html=True)
+        st.markdown("**Confidence Scores:**")
         for i, label in enumerate(classes):
-            st.write(f"{label}: {pred_proba[i]*100:.2f}%")
-
+            st.markdown(f"<span style='color:#00b36e;'>{label}:</span> {pred_proba[i]*100:.2f}%", unsafe_allow_html=True)
