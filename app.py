@@ -49,6 +49,4 @@ if st.button("Predict Sentiment"):
         
         # Display results
         st.write(f"**Predicted sentiment:** {pred_label}")
-        st.write("**Confidence Scores:**")
-        for i, label in enumerate(classes):
-            st.write(f"{label}")
+       
