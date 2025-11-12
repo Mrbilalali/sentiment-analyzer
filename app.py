@@ -5,26 +5,26 @@ import pickle
 import numpy as np
 import re
 
-# -- Load the trained Keras model (GRU) --
-@st.cache_resource  # cache the model so it loads only once
+# Load the trained Keras model (GRU) 
+@st.cache_resource 
 def load_sentiment_model():
     model = tf.keras.models.load_model('gru_model.h5')
     return model
 
 model = load_sentiment_model()
 
-# -- Load the tokenizer --
+# Load the tokenizer
 with open('tokenizer.pickle', 'rb') as handle:
     tokenizer = pickle.load(handle)
 
-# -- Text cleaning function (same as used during training) --
+#  Text cleaning function (same as used during training) 
 def clean_text(text):
-    text = text.lower()                            # lowercase
-    text = re.sub(r'<.*?>', '', text)             # remove HTML tags
-    text = re.sub(r'[^a-z\s]', '', text)          # remove punctuation and numbers
+    text = text.lower()                            
+    text = re.sub(r'<.*?>', '', text)            
+    text = re.sub(r'[^a-z\s]', '', text)          s
     return text
 
-# -- Streamlit UI --
+# Streamlit UI
 st.title("Movie Review Sentiment Analysis")
 st.write("Enter a movie review and the GRU model will predict its sentiment.")
 
@@ -35,13 +35,13 @@ if st.button("Predict Sentiment"):
         st.write("Please enter some text to analyze.")
     else:
         # Preprocess the input
-        cleaned = clean_text(review)  # apply cleaning steps
+        cleaned = clean_text(review) 
         seq = tokenizer.texts_to_sequences([cleaned])
-        max_len = 200  # must match training max length
+        max_len = 200 
         padded = pad_sequences(seq, maxlen=max_len)
         
         # Model prediction
-        preds = model.predict(padded)   # returns array of probabilities
+        preds = model.predict(padded) 
         pred_proba = preds[0]
         classes = ['Negative', 'Neutral', 'Positive']
         pred_index = np.argmax(pred_proba)
@@ -51,4 +51,4 @@ if st.button("Predict Sentiment"):
         st.write(f"**Predicted sentiment:** {pred_label}")
         st.write("**Confidence Scores:**")
         for i, label in enumerate(classes):
-            st.write(f"{label}: {pred_proba[i]*100:.2f}%")
+            st.write(f"{label}")
